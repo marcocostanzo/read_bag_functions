@@ -17,7 +17,9 @@ end
 t = zeros(1,numel(msg));
 position = zeros(numel(joints_to_read),numel(msg));
 velocity = zeros(numel(joints_to_read),numel(msg));
+if(nargout>=4)
 effort = zeros(numel(joints_to_read),numel(msg));
+end
 
 for i=1:numel(msg)     
     if(b_time_from_header)
@@ -30,11 +32,15 @@ for i=1:numel(msg)
         if isempty(index)
             position(j,i) = NaN;
             velocity(j,i) = NaN;
+            if(nargout>=4)
             effort(j,i) = NaN;
+            end
         else
             position(j,i) = msg{i}.position(index);
             velocity(j,i) = msg{i}.velocity(index);
+            if(nargout>=4)
             effort(j,i) = msg{i}.effort(index);
+            end
         end
     end
 end
